@@ -1,0 +1,41 @@
+
+/*Define a style rule that changes the appearance of an anchor (link) when you hover mouse over it.
+
+Write styles for lists and tables, then use specificity to make one row or cell in your table 
+(or one item in your list) appear different from other.
+
+Use the id and class selectors when defining the styles. 
+Experiment different ways of positioning elements and adjusting their size.*/
+
+
+a:hover {
+    background-color: greenyellow;
+}
+
+.tableclass {
+    padding: 10px, 0px;
+    color: blue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.listclass {
+    color:maroon;
+    font-size: 25px;
+}
+
+#special_list_item {
+    color:rgb(13, 13, 170);
+    font-weight: bold;
+}
+
+#special_table_item {
+    color:red;
+    font-weight: bold;
+}
+
+th, td {
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid black;
+    text-align: center;
+  }
