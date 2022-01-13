@@ -7,6 +7,9 @@ Write styles for lists and tables, then use specificity to make one row or cell 
 Use the id and class selectors when defining the styles. 
 Experiment different ways of positioning elements and adjusting their size.*/
 
+p {
+    font-weight: bold;
+}
 
 a:hover {
     background-color: greenyellow;
