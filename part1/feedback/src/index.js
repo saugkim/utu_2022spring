@@ -113,8 +113,8 @@ class App extends React.Component {
             <Statistics name={labels[0]} counter={this.state.good} total={this.state.total.length}/>
             <Statistics name={labels[1]} counter={this.state.neutral} total={this.state.total.length} />
             <Statistics name={labels[2]} counter={this.state.bad} total={this.state.total.length}/>          
-            <Statistics name={labels[3]} counter={this.getAvg()} total={this.state.total.length}/>
-            <Statistics name={labels[4]} counter={this.getPos().toFixed(2) + " %"} total={this.state.total.length}/>
+            <Statistics name={labels[3]} counter={this.getAvg().toFixed(1)} total={this.state.total.length}/>
+            <Statistics name={labels[4]} counter={this.getPos().toFixed(1) + " %"} total={this.state.total.length}/>
           </tbody></table>
         </div>
     
