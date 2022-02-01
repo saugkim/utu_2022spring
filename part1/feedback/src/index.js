@@ -7,6 +7,7 @@ const Header = () => {
   )
 }
 
+const threshold = 0
 const labels = ['hyvä', 'neutraali', 'huono', 'keskiarvo', 'positiivisia']
 
 const Button = ( {listner, text} ) => {
@@ -59,17 +60,18 @@ class App extends React.Component {
       bad: 0,
       total: []
     }
-    this.clickBad = this.clickBad.bind(this)
-    this.clickGood = this.clickGood.bind(this)
-    this.clickNeutral = this.clickNeutral.bind(this)
-  }
 
+    //this.clickBad = this.clickBad.bind(this)
+    //this.clickGood = this.clickGood.bind(this)
+    //this.clickNeutral = this.clickNeutral.bind(this)
+    //this.clickButton = this.clickButton.bind(this, [])
+  }
+  
   clickGood = () => {
     this.setState({
       good: this.state.good + 1,
       total: this.state.total.concat(1),
     });
-    console.log(this.state.good)
   }
   clickNeutral = () => {
     this.setState({
@@ -97,14 +99,31 @@ class App extends React.Component {
     return (this.state.good - this.state.bad) / this.state.total.length
   }
 
+  clickButton = (valpos, val0, valneg) =>()=> {
+    this.setState({
+      good: this.state.good + valpos,
+      neutral: this.state.neutral + val0,
+      bad: this.state.bad + valneg,
+      total: this.state.total.concat(1),
+    })
+    console.log(valpos, val0, valneg)
+  }
+
   render() {  
     return (
       <div>
         <Header />    
+{/*   
         <div>
           <Button listner={this.clickGood} text={labels[0]} />
           <Button listner={this.clickNeutral} text={labels[1]} />
           <Button listner={this.clickBad} text= {labels[2]} />
+        </div>
+*/}
+        <div>
+          <Button listner={this.clickButton(1,0,0)} text= {labels[0]} />       
+          <Button listner={this.clickButton(0,1,0)} text= {labels[1]} />       
+          <Button listner={this.clickButton(0,0,1)} text= {labels[2]} />       
         </div>
 
         <div>
