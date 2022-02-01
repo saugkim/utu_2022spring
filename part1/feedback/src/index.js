@@ -1,23 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = () => {
-  return (
-    <h1>anna palautetta</h1>
-  )
-}
+const Header = () => <h1>anna palautetta</h1>
 
 const threshold = 0
+
 const labels = ['hyvä', 'neutraali', 'huono', 'keskiarvo', 'positiivisia']
 
-const Button = ( {listner, text} ) => {
-  return (
-    <button onClick={listner}>{text}</button>
-  )
-}
+const Button = ( {listner, text} ) => (
+  <button onClick={listner}>
+    {text}
+  </button>
+)
 
 const Result = ( {total} ) => {
-  if ( total === 0) {
+  if ( total <= threshold) {
     return (
       <div>
         <h2>statistics</h2>
@@ -32,7 +29,7 @@ const Result = ( {total} ) => {
 }
 
 const Statistics = ( {name, counter, total} ) =>{
-  if ( total === 0) {
+  if ( total <= threshold) {
     return (
       null  
     )
@@ -45,11 +42,9 @@ const Statistics = ( {name, counter, total} ) =>{
     )
   }
 }
-const Footer = () => {
-  return (
-    <footer><br />Web and mobile programming 2022: PART1 6-10 by Kim (yukkim@utu.fi)</footer>
-  )
-}
+
+const Footer = () => <footer><br />Web and mobile programming 2022: PART1 6-10 by Kim (yukkim@utu.fi)</footer>
+
 
 class App extends React.Component {
   constructor(props) {
@@ -60,11 +55,6 @@ class App extends React.Component {
       bad: 0,
       total: []
     }
-
-    //this.clickBad = this.clickBad.bind(this)
-    //this.clickGood = this.clickGood.bind(this)
-    //this.clickNeutral = this.clickNeutral.bind(this)
-    //this.clickButton = this.clickButton.bind(this, [])
   }
   
   clickGood = () => {
@@ -121,9 +111,15 @@ class App extends React.Component {
         </div>
 */}
         <div>
-          <Button listner={this.clickButton(1,0,0)} text= {labels[0]} />       
-          <Button listner={this.clickButton(0,1,0)} text= {labels[1]} />       
-          <Button listner={this.clickButton(0,0,1)} text= {labels[2]} />       
+          <Button 
+            listner={this.clickButton(1,0,0)} 
+            text= {labels[0]} />       
+          <Button 
+            listner={this.clickButton(0,1,0)} 
+            text= {labels[1]} />       
+          <Button 
+            listner={this.clickButton(0,0,1)} 
+            text= {labels[2]} />       
         </div>
 
         <div>
