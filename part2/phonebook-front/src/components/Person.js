@@ -5,7 +5,7 @@ const Person = ({person, listener}) => {
     <tr>
       <td>{person.name}</td>
       <td>{person.number}</td>
-      <td><button onClick={listener}>poisto</button></td>
+      <td><button onClick={listener}>poista</button></td>
     </tr>
   )   
 }
