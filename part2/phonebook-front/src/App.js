@@ -1,49 +1,67 @@
-import React from 'react';
-import Header from './components/Header';
-import ViewPersons from './components/ViewPersons';
-//import Form from './components/Form';
+import React from 'react'
+import axios from 'axios'
 
+import Header from './components/Header';
 import Input from './components/Input';
 import Button from './components/Button';
+import Person from './components/Person';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      persons: [
-        { 
-          name: 'Arto Hellas', 
-          number: '040-123456' 
-        },
-      ],
+      persons: [],
       newName: '',
       newNumber: '',
     }
   }
 
-  addPerson = (event) => {
-    event.preventDefault()
-    
-    const lista = this.state.persons.map(person => person.name)
-    console.log(lista)
+  componentDidMount() {
+    console.log('did mount')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        this.setState({ persons: response.data })
+      })
+  }
 
+  addPersonDB = (event) => {
+    event.preventDefault()
+    const lista = this.state.persons.map(person => person.name)
+    
     const personObject = {
       name: this.state.newName,
       number: this.state.newNumber,
     }
-  
+
     if (lista.includes(this.state.newName)) {
       alert("person name already in the list")
     } else {
-      console.log("do something")
-      const persons = this.state.persons.concat(personObject)
-      this.setState({
-        persons: persons,
-        newName: '',
-        newNumber: '',
-      })
+      axios
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+          this.setState({
+            persons: this.state.persons.concat(response.data),
+            newName: '',
+            newNumber: ''
+          })
+        })
     }
+  }
+
+  deletePerson = (id) => {
+    const url = `http://localhost:3001/persons/${id}`
+    axios
+      .delete(url)
+      //.then(() => true);
+      .then(response => {
+        const persons = this.state.persons.filter(item => item.id !== id);  
+        this.setState({
+          persons: persons })
+      })
+    return true
   }
 
   handlePersonChange = (event) => {
@@ -58,13 +76,19 @@ class App extends React.Component {
     return (
       <div>
         <Header title='Puhelinluettelo'></Header>  
-        <form onSubmit = {this.addPerson}>
+        <form onSubmit = {this.addPersonDB}>
           <Input title='nimi' newValue={this.state.newName} handler={this.handlePersonChange}></Input>
           <Input title='numero' newValue={this.state.newNumber} handler={this.handleNumberChange}></Input>
           <Button text='lisää'></Button>
         </form> 
         <Header title='Numerot'></Header> 
-        <ViewPersons list={this.state.persons}></ViewPersons>
+        <table><tbody>
+          {this.state.persons.map(person => 
+            <Person key={person.id} 
+                    person={person} 
+                    listener={() => { window.confirm('Poistetaanko '+ person.name) && this.deletePerson(person.id) }} />
+          )}
+        </tbody></table>
       </div>    
     )
   }
