@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Input from './components/Input';
 import Button from './components/Button';
 import Person from './components/Person';
+import services from './services/personService';
 
 class App extends React.Component {
 
@@ -51,12 +52,21 @@ class App extends React.Component {
     }
   }
 
+  removePerson = (id) => {
+    services.remove(id)
+      .then(() => {
+        this.setState({
+          persons: this.state.persons.filter(item => item.id !== id) })
+      })
+    return true
+  }
+
   deletePerson = (id) => {
     const url = `http://localhost:3001/persons/${id}`
     axios
       .delete(url)
       //.then(() => true);
-      .then(response => {
+      .then(() => {
         const persons = this.state.persons.filter(item => item.id !== id);  
         this.setState({
           persons: persons })
@@ -86,7 +96,7 @@ class App extends React.Component {
           {this.state.persons.map(person => 
             <Person key={person.id} 
                     person={person} 
-                    listener={() => { window.confirm('Poistetaanko '+ person.name) && this.deletePerson(person.id) }} />
+                    listener={() => { window.confirm('Poistetaanko '+ person.name) && this.removePerson(person.id) }} />
           )}
         </tbody></table>
       </div>    
