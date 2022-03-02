@@ -1,0 +1,24 @@
+{
+  "name": "phonebook-back",
+  "version": "1.0.0",
+  "description": "phonebook app backend part",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "expresse",
+    "mongodb",
+    "heroku"
+  ],
+  "author": "kim",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
