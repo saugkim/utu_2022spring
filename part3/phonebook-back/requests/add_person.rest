@@ -5,3 +5,13 @@ Content-Type: application/json
     "name" : "New Person",
     "number": "012-345-6789"
 }
+
+
+### 
+POST https://phonebook-backend-test-app.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "name" : "New Person",
+    "number": "012-345-6789"
+}
