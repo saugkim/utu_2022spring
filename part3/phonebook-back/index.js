@@ -11,7 +11,6 @@ const logger = (request, response, next) => {
   console.log('---')
   next()
 }
-
 app.use(logger)
 
 const cors = require('cors')
@@ -19,58 +18,50 @@ app.use(cors())
 
 app.use(express.static('build'))
 
-let persons = 
-  [
-    {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Martti Tienari",
-      "number": "040-123456",
-      "id": 2
-    },
-    {
-      "name": "Arto Järvinen",
-      "number": "040-123456",
-      "id": 3
-    },
-    {
-      "name": "Lea Kutvonen",
-      "number": "040-123456",
-      "id": 4
-    }
-  ]
+const Person = require('./models/person')
 
-const generateId = () => {
-  min = Math.ceil(1)
-  max = Math.floor(100000)
-  return Math.floor(Math.random() * (max - min) + min)
+
+const formatPerson = (person) => {
+  const formattedPerson = { ...person._doc, id: person._id }
+  delete formattedPerson._id
+  delete formattedPerson.__v
+
+  return formattedPerson
 }
 
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  Person
+    .find({})
+    .then(persons => 
+      response.json(persons.map(formatPerson)))
 })
 
 app.get('/api/persons/:id', (request, response) => {
-  console.log(request.params.id)
-  const id = Number(request.params.id)
-  const person = persons.find(person => person.id === id)
-
-  if (person) {
-    response.json(person)
-  } else {
-    response.status(404).end()
-  }
+  Person
+    .findById(request.params.id)
+    .then(person => {
+      if (person) {
+        response.json(formatPerson(person))
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(400).end()
+    })
 })
 
-app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-
-  response.status(204).end()
-}) 
+app.delete('/api/persons/:id', (request, response) =>{
+  Person
+    .findByIdAndDelete(request.params.id)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => {
+      response.status(400).send({error: 'not matching id'})
+    })
+})
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
@@ -81,19 +72,26 @@ app.post('/api/persons', (request, response) => {
   if (body.number === undefined) {
     return response.status(400).json({error: 'number missing'})
   }
-  if (persons.find( person => person.name === body.name)){
-    return response.status(400).json({error: 'name must be unique'})
-  }
 
-  const person = {
-    name: body.name,
-    number: body.number,
-    id: generateId()
-  }
-  console.log(person.id)
-  persons = persons.concat(person)
-
-  response.json(person)
+  Person
+    .find( {name: body.name} )
+    .then(result => {
+      if (result.length !== 0) {
+        console.log('person found')
+        response.status(400).json({error: 'name must be unique'})
+      } else {
+        console.log('NOT found')
+        const person = new Person({
+          name: body.name,
+          number: body.number
+        })
+        person
+          .save()
+          .then(savedPerson => {
+            response.json(formatPerson(savedPerson))
+          })
+      }
+    })
 })
 
 const error = (request, response) => {
@@ -102,7 +100,6 @@ const error = (request, response) => {
 
 app.use(error)
 
-//const port = 3001
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
