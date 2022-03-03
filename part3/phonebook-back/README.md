@@ -23,13 +23,13 @@ node index.js
 ------
 npm install express --save
 "dependencies" : {
-  "express": "^4.16.2"
+  "express": "^4.17.3"
 }
 
 -----
 npm install --save-dev nodemon
 "devDependencies" : {
-  "nodemon": "^1.13.3"
+  "nodemon": "^2.0.15"
 }
 
 node_modeuls/.bin/nodemon index.js
