@@ -20,12 +20,18 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('did mount')
-    axios
-      .get('http://localhost:3001/persons')
+    services
+      .getAll()
       .then(response => {
         console.log('promise fulfilled')
-        this.setState({ persons: response.data })
+        this.setState({persons: response})
       })
+    // axios
+    //   .get('http://localhost:3001/persons')
+    //   .then(response => {
+    //     console.log('promise fulfilled')
+    //     this.setState({ persons: response.data })
+    //   })
   }
 
   addPersonDB = (event) => {
@@ -40,15 +46,24 @@ class App extends React.Component {
     if (lista.includes(this.state.newName)) {
       alert("person name already in the list")
     } else {
-      axios
-        .post('http://localhost:3001/persons', personObject)
+      services
+        .create(personObject)
         .then(response => {
-          this.setState({
-            persons: this.state.persons.concat(response.data),
+          this.setState( {
+            persons: this.state.persons.concat(response),
             newName: '',
             newNumber: ''
           })
         })
+      // axios
+      //   .post('http://localhost:3001/persons', personObject)
+      //   .then(response => {
+      //     this.setState({
+      //       persons: this.state.persons.concat(response.data),
+      //       newName: '',
+      //       newNumber: ''
+      //     })
+      //   })
     }
   }
 
