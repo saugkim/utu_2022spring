@@ -1,3 +1,37 @@
+## app use port 3000  
+
+  ```npm start```
+
+http://localhost:3000  
+
+## json-server use port 3001
+
+```  npx json-server --port=3001 --watch db.json ```
+
+
+Go to the address http://localhost:3001/persons.  
+json-server offers items we saved in a file in JSON format.
+
+**easy start JSON Server in the project directory**  
+
+```npm install json-server --save```  
+
+add server scripts into package.json
+```{
+  /*...*/
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "server": "json-server -p3001 db.json"
+  }
+}
+```
+then
+```npm run server ```
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
