@@ -12,7 +12,7 @@ http://localhost:3000
 Go to the address http://localhost:3001/persons.  
 json-server offers items we saved in a file in JSON format.
 
-
+**easy start JSON Server in the project directory**  
 
 ```npm install json-server --save```  
 
@@ -27,8 +27,9 @@ add server scripts into package.json
     "server": "json-server -p3001 db.json"
   }
 }
-
 ```
+then
+```npm run server ```
 
 
 # Getting Started with Create React App
