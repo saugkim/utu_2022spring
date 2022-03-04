@@ -43,4 +43,25 @@ npm run watch (auto restart)
 
 ```
 
+<br>
+
+*Deploy using heroku*  
+
+Procfile ```web: node index.js```
+
+port defined by the environment variable PORT or 3001 
+
+```
+const PORT = process.env.PORT || 3001
+```
+
+*frontend build*  
+```
+npm run build
+``` 
+
+```
+app.use(express.static('build'))
+```
+
 
