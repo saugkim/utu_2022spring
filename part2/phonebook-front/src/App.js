@@ -1,11 +1,12 @@
 import React from 'react'
-import axios from 'axios'
 
 import Header from './components/Header';
-import Input from './components/Input';
-import Button from './components/Button';
-import Person from './components/Person';
+// import Input from './components/Input';
+// import Button from './components/Button';
+//import Person from './components/Person';
 import services from './services/personService';
+import Form from './components/Form'
+import ViewPersons from './components/ViewPersons';
 
 class App extends React.Component {
 
@@ -26,12 +27,6 @@ class App extends React.Component {
         console.log('promise fulfilled')
         this.setState({persons: response})
       })
-    // axios
-    //   .get('http://localhost:3001/persons')
-    //   .then(response => {
-    //     console.log('promise fulfilled')
-    //     this.setState({ persons: response.data })
-    //   })
   }
 
   addPersonDB = (event) => {
@@ -55,39 +50,29 @@ class App extends React.Component {
             newNumber: ''
           })
         })
-      // axios
-      //   .post('http://localhost:3001/persons', personObject)
-      //   .then(response => {
-      //     this.setState({
-      //       persons: this.state.persons.concat(response.data),
-      //       newName: '',
-      //       newNumber: ''
-      //     })
-      //   })
     }
   }
 
-  removePerson = (id) => {
-    services.remove(id)
-      .then(() => {
-        this.setState({
-          persons: this.state.persons.filter(item => item.id !== id) })
-      })
-    return true
+  deletePerson = (person) => {
+    if (window.confirm(`poistetaanko ${person.name} ?`)) {
+      services
+        .remove(person.id)
+        .then(() => {
+          this.setState({
+            persons: this.state.persons.filter(item => item.id !== person.id) })
+        })
+      return true
+    }
   }
 
-  deletePerson = (id) => {
-    const url = `http://localhost:3001/persons/${id}`
-    axios
-      .delete(url)
-      //.then(() => true);
-      .then(() => {
-        const persons = this.state.persons.filter(item => item.id !== id);  
-        this.setState({
-          persons: persons })
-      })
-    return true
-  }
+  // removePerson = (id) => {
+  //   services.remove(id)
+  //     .then(() => {
+  //       this.setState({
+  //         persons: this.state.persons.filter(item => item.id !== id) })
+  //     })
+  //   return true
+  // }
 
   handlePersonChange = (event) => {
     this.setState( {newName: event.target.value});
@@ -101,19 +86,23 @@ class App extends React.Component {
     return (
       <div>
         <Header title='Puhelinluettelo'></Header>  
-        <form onSubmit = {this.addPersonDB}>
-          <Input title='nimi' newValue={this.state.newName} handler={this.handlePersonChange}></Input>
-          <Input title='numero' newValue={this.state.newNumber} handler={this.handleNumberChange}></Input>
-          <Button text='lisää'></Button>
-        </form> 
+        <Form
+          addFunction={this.addPersonDB}
+          value1={this.state.newName}
+          handler1={this.handlePersonChange}
+          value2={this.state.newNumber}
+          handler2={this.handleNumberChange}
+        />
+      
         <Header title='Numerot'></Header> 
-        <table><tbody>
+        <ViewPersons list={this.state.persons} listener ={this.deletePerson} /> 
+        {/* <table><tbody>
           {this.state.persons.map(person => 
             <Person key={person.id} 
                     person={person} 
-                    listener={() => { window.confirm('Poistetaanko '+ person.name) && this.removePerson(person.id) }} />
+                    listener={() => { window.confirm('poistetaanko '+ person.name) && this.removePerson(person.id) }} />
           )}
-        </tbody></table>
+        </tbody></table> */} 
       </div>    
     )
   }
