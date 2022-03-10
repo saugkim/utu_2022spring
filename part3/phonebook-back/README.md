@@ -23,13 +23,13 @@ node index.js
 ------
 npm install express --save
 "dependencies" : {
-  "express": "^4.16.2"
+  "express": "^4.17.3"
 }
 
 -----
 npm install --save-dev nodemon
 "devDependencies" : {
-  "nodemon": "^1.13.3"
+  "nodemon": "^2.0.15"
 }
 
 node_modeuls/.bin/nodemon index.js
@@ -41,6 +41,27 @@ node_modeuls/.bin/nodemon index.js
 npm start (need restart after code changes)
 npm run watch (auto restart)
 
+```
+
+<br>
+
+*Deploy using heroku*  
+
+Procfile ```web: node index.js```
+
+port defined by the environment variable PORT or 3001 
+
+```
+const PORT = process.env.PORT || 3001
+```
+
+*frontend build*  
+```
+npm run build
+``` 
+
+```
+app.use(express.static('build'))
 ```
 
 
