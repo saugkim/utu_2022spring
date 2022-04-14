@@ -18,7 +18,7 @@ const NoteList = (props) => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@storage_Key')
-      const parsed = jsonValue === null ? null : JSON.parse(jsonValue)
+      const parsed = jsonValue === null ? [] : JSON.parse(jsonValue)
       console.log('parsed in Notelist:', parsed)
       setNotes(parsed)
       return parsed
@@ -30,7 +30,7 @@ const NoteList = (props) => {
   getData()
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         { notes.map( note =>
           <Note
@@ -39,11 +39,12 @@ const NoteList = (props) => {
           />)}
       </ScrollView>
 
-      <Button 
-        color="blue"
-        title="Create New Note" 
-        onPress={ () => props.navigation.navigate('Create New Note', { notelist: notes}) } 
-      />
+      <View style={styles.button}>
+        <Button 
+          color="blue"
+          title="Create New Note" 
+          onPress={ () => props.navigation.navigate('Create New Note', { notelist: notes}) } />
+      </View>
     </View>
   )
 }
@@ -79,6 +80,7 @@ const Creation = ( {navigation, route} ) => {
       )
     }
   }
+
   return (
     <View>
       <TextInput style={styles.textInput}
