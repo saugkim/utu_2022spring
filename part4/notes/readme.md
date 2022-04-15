@@ -18,13 +18,19 @@ npm start
 ```
 
 **Features**  
-Main view: Scrollable view listing the retrieved notes and button to open Add Note view    
+Main view:    
+   - ScrollView to show retrieved notes
+   - Button to open new view (Create New Note View)
+   
+Create New Note view:  
+  - Text input field to write a new note
+  - Button to save current note and return to main view
+  
+<br />
+<br />
 
-Add Note view: Text input to write new note and button to save and return to main  
-
-
-
-
+**Demo view**  
+<img src="Screenshot-1.png" width=200 />  <img src="Screenshot-2.png" width=200 />  <img src="Screenshot-3.png" width=200 />  <img src="Screenshot-4.png" width=200 />
 
 
 
