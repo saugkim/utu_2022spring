@@ -1,6 +1,12 @@
 Mobile app **Notes** using React Native and Expo  
 Tools: Expo cli in linus and Expo go in Android physical device
 
+```
+expo init nameofapp
+cd nameofapp
+npm start 
+```
+
 
 libraries needed  
 ```
@@ -10,12 +16,6 @@ $ npm install @react-navigation/stack
 $ expo install @react-native-async-storage/async-storage
 ```
 
-
-```
-expo init nameofapp
-cd nameofapp
-npm start 
-```
 
 **Features**  
 Main view:    
