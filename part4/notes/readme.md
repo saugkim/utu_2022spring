@@ -1,5 +1,6 @@
-Mobile app **Notes** using React Native and Expo  
-Tools: Expo cli and Expo go in Android physical device
+Mobile app using React Native and Expo  
+Tools: Expo cli and Expo go
+Test device: Android physical device (Motorola)
 
 ```
 expo init nameofapp
