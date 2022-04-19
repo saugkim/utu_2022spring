@@ -1,5 +1,5 @@
 Mobile app **Notes** using React Native and Expo  
-Tools: Expo cli in linus and Expo go in Android physical device
+Tools: Expo cli and Expo go in Android physical device
 
 ```
 expo init nameofapp
