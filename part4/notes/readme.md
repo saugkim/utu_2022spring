@@ -1,5 +1,5 @@
 Mobile app using React Native and Expo  
-Tools: Expo cli and Expo go
+Tools: Expo cli and Expo go  
 Test device: Android physical device (Motorola)
 
 ```
